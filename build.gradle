@@ -234,17 +234,6 @@ subprojects {
     }
 
     publishing {
-        repositories {
-            maven {
-                name="sonatype"
-
-                def releasesRepoUrl = "https://ossrh-staging-api.central.sonatype.com/service/local/staging/deploy/maven2/"
-                def snapshotsRepoUrl = "https://ossrh-staging-api.central.sonatype.com/content/repositories/snapshots/"
-                url = version.endsWith('SNAPSHOT') ? snapshotsRepoUrl : releasesRepoUrl
-
-                credentials(PasswordCredentials)
-            }
-        }
         publications {
             mavenJava(MavenPublication) {
                 from components.java
@@ -287,27 +276,6 @@ subprojects {
                 }
             }
         }
-
-        signing {
-            sign publishing.publications.mavenJava
-            useGpgCmd()
-            // Some issue in the plugin:
-            // GPG outputs already armored signatures. The plugin also does armoring for `asc` files.
-            // This results in double armored signatures, i.e. garbage.
-            // Override the signature type provider to use unarmored output for `asc` files, which works well with GPG.
-            signatureTypes = new AbstractSignatureTypeProvider() {
-                {
-                    BinarySignatureType binary = new BinarySignatureType() {
-                        @Override
-                        String getExtension() {
-                            return "asc"
-                        }
-                    }
-                    register(binary)
-                    setDefaultType(binary.getExtension())
-                }
-            }
-        }
     }
 
     // Skip test fixtures from distribution archives
@@ -334,6 +302,8 @@ distributions {
             from(project(":storage:core").configurations.runtimeClasspath)
             from(project(":storage:filesystem").jar)
             from(project(":storage:filesystem").configurations.runtimeClasspath)
+            from(project(":storage:s3").jar)
+            from(project(":storage:s3").configurations.runtimeClasspath)
         }
     }
 }
@@ -395,9 +365,7 @@ def modulesToPublish = [
         ':core',
         ':storage:core',
         ':storage:filesystem',
-        ':storage:s3',
-        ':storage:gcs',
-        ':storage:azure',
+        ':storage:s3'
 ]
 
 // Define and configure the publishToSonatype task
