@@ -108,17 +108,17 @@ subprojects {
 
         slf4jVersion = "1.7.36"
 
-        kafkaVersion = "4.3.1"
+        kafkaVersion = "3.6.0"
 
         assertJVersion = "3.27.3"
 
-        apacheCommonsIOVersion = "2.21.0"
+        apacheCommonsIOVersion = "2.19.0"
 
-        jacksonVersion = "2.21.6"
+        jacksonVersion = "2.19.2"
 
         awaitilityVersion = "4.3.0"
 
-        awsSdkVersion = "2.54.7"
+        awsSdkVersion = "2.31.13"
 
         gcpSdkVersion = "2.52.3"
 
