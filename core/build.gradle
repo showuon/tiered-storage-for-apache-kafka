@@ -22,11 +22,11 @@ archivesBaseName = "core"
 ext {
     // Keep empty lines between versions to avoid conflicts on mass update (e.g. Dependabot).
 
-    bouncyCastleVersion = "1.80"
+    bouncyCastleVersion = "1.85"
 
     caffeineVersion = "3.2.0"
 
-    zstdVersion = "1.5.6.10-rhel8-redhat-00001"
+    zstdVersion = "1.5.7.16-rhel8-redhat-00001"
 }
 
 dependencies {
